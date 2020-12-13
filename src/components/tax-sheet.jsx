@@ -47,21 +47,21 @@ const TransferPanel = styled.div`
   background-color: green;
 `;
 
-const TaxSheet = () => {
+const TaxSheet = ({ selectedTaxID }) => {
   const [inEditMode, setInEditMode] = useState(false);
-  const [property, updateProperty] = useState({
-    style: "residential",
-    yearBuilt: "1940",
-    grade: "C-1"
-  });
-  const formik = useFormik({
-    initialValues: property,
-    onSubmit: (values) => {
-      updateProperty(values);
-    }
-  });
+  //   const [property, updateProperty] = useState({
+  //     style: "residential",
+  //     yearBuilt: "1940",
+  //     grade: "C-1"
+  //   });
+  //   const formik = useFormik({
+  //     initialValues: property,
+  //     onSubmit: (values) => {
+  //       updateProperty(values);
+  //     }
+  //   });
 
-  return (
+  return selectedTaxID !== "" ? (
     <Grids>
       <BasePanel>
         <BaseDetails />
@@ -70,18 +70,20 @@ const TaxSheet = () => {
       <AssessmentPanel></AssessmentPanel>
       <TransferPanel></TransferPanel>
     </Grids>
-    // <form onSubmit={formik.handleSubmit}>
-    //   <label htmlFor="email">style</label>
-    //   <input
-    //     id="style"
-    //     name="style"
-    //     type="style"
-    //     onChange={formik.handleChange}
-    //     value={formik.values.style}
-    //   />
-    //   <button type="submit">Submit</button>
-    // </form>
+  ) : (
+    "Select a Property"
   );
-};
 
+  // <form onSubmit={formik.handleSubmit}>
+  //   <label htmlFor="email">style</label>
+  //   <input
+  //     id="style"
+  //     name="style"
+  //     type="style"
+  //     onChange={formik.handleChange}
+  //     value={formik.values.style}
+  //   />
+  //   <button type="submit">Submit</button>
+  // </form>
+};
 export default TaxSheet;

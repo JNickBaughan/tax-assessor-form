@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
 import TaxSheet from "../components/tax-sheet";
+import PropertyCard from "../components/results/property-card";
+import { resultsData } from "../mock-state/results";
 
 const Grid = styled.div`
   overflow-y: hidden;
@@ -38,12 +41,33 @@ const DetailsPanel = styled.div`
 `;
 
 const TaxAssessorContainer = () => {
+  useEffect(() => {
+    setResults(resultsData);
+  }, []);
+
+  const [results, setResults] = useState([]);
+  const [selectedTaxID, setSelectedTaxID] = useState("");
+
+  const selectProperty = (taxId) => {
+    setSelectedTaxID(taxId);
+  };
+
   return (
     <Grid>
-      <ResultsPanel></ResultsPanel>
+      <ResultsPanel>
+        {results.map((results) => {
+          return (
+            <PropertyCard
+              selectProperty={selectProperty}
+              address={results.address}
+              taxId={results.taxId}
+            />
+          );
+        })}
+      </ResultsPanel>
       <SearchPanel></SearchPanel>
       <DetailsPanel>
-        <TaxSheet />
+        <TaxSheet selectedTaxID={selectedTaxID} />
       </DetailsPanel>
     </Grid>
   );
