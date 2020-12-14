@@ -26,7 +26,7 @@ const BaseDetails = () => {
   return (
     <div>
       <LeftDiv>
-        <label></label>
+        <label>title</label>
         <Input id="title" name="style" onChange={() => {}} value={"test"} />
       </LeftDiv>
       <RightDiv>

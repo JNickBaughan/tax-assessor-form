@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import styled from "styled-components";
 import BaseDetails from "../components/details/base";
+import StateContext from "../context";
 
 const Grids = styled.div`
   overflow-y: hidden;
@@ -47,8 +48,26 @@ const TransferPanel = styled.div`
   background-color: green;
 `;
 
-const TaxSheet = ({ selectedTaxID }) => {
-  const [inEditMode, setInEditMode] = useState(false);
+const TaxSheet = () => {
+  return (
+    <StateContext.Consumer>
+      {({ selectedTaxID }) => {
+        return selectedTaxID !== "" ? (
+          <Grids>
+            <BasePanel>
+              <BaseDetails />
+            </BasePanel>
+            <ResidentialPanel></ResidentialPanel>
+            <AssessmentPanel></AssessmentPanel>
+            <TransferPanel></TransferPanel>
+          </Grids>
+        ) : (
+          "Select a Property"
+        );
+      }}
+    </StateContext.Consumer>
+  );
+  //const [inEditMode, setInEditMode] = useState(false);
   //   const [property, updateProperty] = useState({
   //     style: "residential",
   //     yearBuilt: "1940",
@@ -60,19 +79,6 @@ const TaxSheet = ({ selectedTaxID }) => {
   //       updateProperty(values);
   //     }
   //   });
-
-  return selectedTaxID !== "" ? (
-    <Grids>
-      <BasePanel>
-        <BaseDetails />
-      </BasePanel>
-      <ResidentialPanel></ResidentialPanel>
-      <AssessmentPanel></AssessmentPanel>
-      <TransferPanel></TransferPanel>
-    </Grids>
-  ) : (
-    "Select a Property"
-  );
 
   // <form onSubmit={formik.handleSubmit}>
   //   <label htmlFor="email">style</label>

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import TaxSheet from "../components/tax-sheet";
 import PropertyCard from "../components/results/property-card";
 import { resultsData } from "../mock-state/results";
+import StateContext from "../context";
 
 const Grid = styled.div`
   overflow-y: hidden;
@@ -41,35 +42,44 @@ const DetailsPanel = styled.div`
 `;
 
 const TaxAssessorContainer = () => {
+  const [results, setResults] = useState([]);
+  const [selectedTaxID, setSelectedTaxID] = useState("");
+  const [details, setDetails] = useState({});
+
   useEffect(() => {
+    // TODO: setup graphQL and make call here
     setResults(resultsData);
   }, []);
 
-  const [results, setResults] = useState([]);
-  const [selectedTaxID, setSelectedTaxID] = useState("");
-
-  const selectProperty = (taxId) => {
-    setSelectedTaxID(taxId);
-  };
-
   return (
-    <Grid>
-      <ResultsPanel>
-        {results.map((results) => {
-          return (
-            <PropertyCard
-              selectProperty={selectProperty}
-              address={results.address}
-              taxId={results.taxId}
-            />
-          );
-        })}
-      </ResultsPanel>
-      <SearchPanel></SearchPanel>
-      <DetailsPanel>
-        <TaxSheet selectedTaxID={selectedTaxID} />
-      </DetailsPanel>
-    </Grid>
+    <StateContext.Provider
+      value={{
+        results,
+        selectedTaxID,
+        details,
+        setDetails,
+        setSelectedTaxID,
+        setResults
+      }}
+    >
+      <Grid>
+        <ResultsPanel>
+          {results.map((results) => {
+            return (
+              <PropertyCard
+                setSelectedTaxID={setSelectedTaxID}
+                address={results.address}
+                taxId={results.taxId}
+              />
+            );
+          })}
+        </ResultsPanel>
+        <SearchPanel></SearchPanel>
+        <DetailsPanel>
+          <TaxSheet selectedTaxID={selectedTaxID} />
+        </DetailsPanel>
+      </Grid>
+    </StateContext.Provider>
   );
 };
 
