@@ -51,6 +51,14 @@ const TaxAssessorContainer = () => {
     setResults(resultsData);
   }, []);
 
+  const selectProperty = (taxId) => {
+    setSelectedTaxID(taxId);
+    const selected = results.findIndex((p) => p.taxId === taxId);
+    if (selected > -1) {
+      setDetails(results[selected]);
+    }
+  };
+
   return (
     <StateContext.Provider
       value={{
@@ -58,7 +66,7 @@ const TaxAssessorContainer = () => {
         selectedTaxID,
         details,
         setDetails,
-        setSelectedTaxID,
+        selectProperty,
         setResults
       }}
     >
@@ -67,7 +75,7 @@ const TaxAssessorContainer = () => {
           {results.map((results) => {
             return (
               <PropertyCard
-                setSelectedTaxID={setSelectedTaxID}
+                setSelectedTaxID={selectProperty}
                 address={results.address}
                 taxId={results.taxId}
               />
@@ -76,7 +84,7 @@ const TaxAssessorContainer = () => {
         </ResultsPanel>
         <SearchPanel></SearchPanel>
         <DetailsPanel>
-          <TaxSheet selectedTaxID={selectedTaxID} />
+          <TaxSheet />
         </DetailsPanel>
       </Grid>
     </StateContext.Provider>

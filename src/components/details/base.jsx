@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import StateContext from "../../context";
 
 const Input = styled.input`
   width: 100%;
@@ -24,16 +25,32 @@ const RightDiv = styled.div`
 
 const BaseDetails = () => {
   return (
-    <div>
-      <LeftDiv>
-        <label>title</label>
-        <Input id="title" name="style" onChange={() => {}} value={"test"} />
-      </LeftDiv>
-      <RightDiv>
-        <label>another title</label>
-        <Input id="title" name="style" onChange={() => {}} value={"test"} />
-      </RightDiv>
-    </div>
+    <StateContext.Consumer>
+      {({ details }) => {
+        return (
+          <div>
+            <LeftDiv>
+              <label>Owner</label>
+              <Input
+                id="title"
+                name="style"
+                onChange={() => {}}
+                value={details.ownerName}
+              />
+            </LeftDiv>
+            <RightDiv>
+              <label>another title</label>
+              <Input
+                id="title"
+                name="style"
+                onChange={() => {}}
+                value={"test"}
+              />
+            </RightDiv>
+          </div>
+        );
+      }}
+    </StateContext.Consumer>
   );
 };
 

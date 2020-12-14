@@ -6,7 +6,7 @@ const StateContext = createContext({
   selectedTaxID: "",
   setResults: () => {},
   setDetails: () => {},
-  setSelectedTaxID: () => {}
+  selectProperty: () => {}
 });
 
 export default StateContext;
