@@ -49,9 +49,13 @@ const TransferPanel = styled.div`
 `;
 
 const TaxSheet = () => {
-  const { selectedTaxID, details, results, setResults } = React.useContext(
-    StateContext
-  );
+  const {
+    selectedTaxID,
+    details,
+    results,
+    setResults,
+    setSelectedTaxID
+  } = React.useContext(StateContext);
 
   const formik = useFormik({
     initialValues: { ...details },
@@ -68,18 +72,24 @@ const TaxSheet = () => {
           return result.taxId === selectedTaxID ? values : result;
         })
       );
+      setSelectedTaxID("");
     }
   });
 
   return selectedTaxID !== "" ? (
-    <Grids>
-      <BasePanel>
-        <BaseDetails formik={formik} />
-      </BasePanel>
-      <ResidentialPanel></ResidentialPanel>
-      <AssessmentPanel></AssessmentPanel>
-      <TransferPanel></TransferPanel>
-    </Grids>
+    <React.Fragment>
+      <button type="submit" onClick={formik.handleSubmit}>
+        Submit
+      </button>
+      <Grids>
+        <BasePanel>
+          <BaseDetails formik={formik} />
+        </BasePanel>
+        <ResidentialPanel></ResidentialPanel>
+        <AssessmentPanel></AssessmentPanel>
+        <TransferPanel></TransferPanel>
+      </Grids>
+    </React.Fragment>
   ) : (
     "Select a Property"
   );

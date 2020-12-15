@@ -67,7 +67,8 @@ const TaxAssessorContainer = () => {
         details,
         setDetails,
         selectProperty,
-        setResults
+        setResults,
+        setSelectedTaxID
       }}
     >
       <Grid>

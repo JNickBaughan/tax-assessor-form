@@ -34,17 +34,17 @@ const BaseDetails = ({ formik }) => {
               <Input
                 id="ownerName"
                 name="ownerName"
-                onChange={() => {}}
+                onChange={formik.handleChange}
                 value={formik.values.ownerName}
               />
             </LeftDiv>
             <RightDiv>
               <label>another title</label>
               <Input
-                id="title"
-                name="style"
-                onChange={() => {}}
-                value={"test"}
+                id="taxId"
+                name="taxId"
+                onChange={formik.handleChange}
+                value={formik.values.taxId}
               />
             </RightDiv>
           </div>
