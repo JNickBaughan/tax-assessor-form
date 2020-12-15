@@ -23,19 +23,19 @@ const RightDiv = styled.div`
   margin: 4px;
 `;
 
-const BaseDetails = () => {
+const BaseDetails = ({ formik }) => {
   return (
     <StateContext.Consumer>
-      {({ details }) => {
+      {() => {
         return (
           <div>
             <LeftDiv>
               <label>Owner</label>
               <Input
-                id="title"
-                name="style"
+                id="ownerName"
+                name="ownerName"
                 onChange={() => {}}
-                value={details.ownerName}
+                value={formik.values.ownerName}
               />
             </LeftDiv>
             <RightDiv>

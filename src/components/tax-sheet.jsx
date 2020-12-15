@@ -49,35 +49,46 @@ const TransferPanel = styled.div`
 `;
 
 const TaxSheet = () => {
-  return (
-    <StateContext.Consumer>
-      {({ selectedTaxID }) => {
-        return selectedTaxID !== "" ? (
-          <Grids>
-            <BasePanel>
-              <BaseDetails />
-            </BasePanel>
-            <ResidentialPanel></ResidentialPanel>
-            <AssessmentPanel></AssessmentPanel>
-            <TransferPanel></TransferPanel>
-          </Grids>
-        ) : (
-          "Select a Property"
-        );
-      }}
-    </StateContext.Consumer>
+  const { selectedTaxID, details, results, setResults } = React.useContext(
+    StateContext
   );
+
+  const formik = useFormik({
+    initialValues: { ...details },
+    enableReinitialize: true,
+    handleChange: (event) => {
+      setDetails((prevDetails) => ({
+        ...prevDetails,
+        [event.target.name]: event.target.value
+      }));
+    },
+    onSubmit: (values) => {
+      setResults(
+        results.map((result) => {
+          return result.taxId === selectedTaxID ? values : result;
+        })
+      );
+    }
+  });
+
+  return selectedTaxID !== "" ? (
+    <Grids>
+      <BasePanel>
+        <BaseDetails formik={formik} />
+      </BasePanel>
+      <ResidentialPanel></ResidentialPanel>
+      <AssessmentPanel></AssessmentPanel>
+      <TransferPanel></TransferPanel>
+    </Grids>
+  ) : (
+    "Select a Property"
+  );
+
   //const [inEditMode, setInEditMode] = useState(false);
   //   const [property, updateProperty] = useState({
   //     style: "residential",
   //     yearBuilt: "1940",
   //     grade: "C-1"
-  //   });
-  //   const formik = useFormik({
-  //     initialValues: property,
-  //     onSubmit: (values) => {
-  //       updateProperty(values);
-  //     }
   //   });
 
   // <form onSubmit={formik.handleSubmit}>

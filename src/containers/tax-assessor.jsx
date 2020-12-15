@@ -75,7 +75,7 @@ const TaxAssessorContainer = () => {
           {results.map((results) => {
             return (
               <PropertyCard
-                setSelectedTaxID={selectProperty}
+                selectProperty={selectProperty}
                 address={results.address}
                 taxId={results.taxId}
               />
